@@ -141,7 +141,20 @@ variable "cnames" {
 
 variable "cloudwatch_alarm_actions" {
   type        = list(string)
-  description = "List of IDs for cloudwatch actions that should be fired when alarms are raised."
+  default     = []
+  description = "The list of actions to execute when this alarm transitions into an ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+}
+
+variable "cloudwatch_ok_actions" {
+  type        = list(string)
+  default     = []
+  description = "The list of actions to execute when this alarm transitions into an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
+}
+
+variable "cloudwatch_insufficient_data_actions" {
+  type        = list(string)
+  default     = []
+  description = "The list of actions to execute when this alarm transitions into an INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN)."
 }
 
 variable "deployed_app" {
@@ -265,7 +278,7 @@ variable "compute_region" {
 variable "ec2_instance_role" {
   type        = string
   description = "The name of the IAM role to attach to the EC2 instances."
-  default     = "EC2UpdateInstanceTags"
+  default     = "ec2-instances"
 }
 
 variable "target_group_port" {
@@ -307,4 +320,16 @@ variable "alb_logs_user_identifiers" {
     "arn:aws:iam::638102146993:root", // cn-north-1**
     "arn:aws:iam::037604701340:root",
   ] // cn-northwest-1**
+}
+
+variable "mybatis_version" {
+  type        = string
+  description = "The version of Mybatis to run migrations using"
+  default     = "3.3.1"
+}
+
+variable "run_mybatis_migrations" {
+  type        = bool
+  default     = true
+  description = "Whether to run the Mybatis migrations"
 }
